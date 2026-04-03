@@ -6,11 +6,11 @@
     2. [Projection IT](#1.2)
     3. [Projection Service](#1.3)
 2. Eigenvector Centrality OT(#2)
-    a. [Eigenvector Physical](#2.1)
-    b. [Eigenvector Sensor](#2.2)
-    c. [Eigenvector Actuator](#2.3)
-    d. [Eigenvector Cyber OT](#2.4)
-    e. [Eigenvector Mission OT](#2.5)
+    1. [Eigenvector Physical](#2.1)
+    2. [Eigenvector Sensor](#2.2)
+    3. [Eigenvector Actuator](#2.3)
+    4. [Eigenvector Cyber OT](#2.4)
+    5. [Eigenvector Mission OT](#2.5)
 3. Eigenvector Centrality IT(#3)
     a. [Queries for the process](#3.1)
     b. [Queries for the process measurements](3.2)
@@ -212,7 +212,7 @@ CALL gds.graph.project(
   ["HUM_MNPLT","HUM_EXECUTE_ORDER","HUM_USE_SRVC","HUM_INTERACT","HUM_ACCESS"]
 );
 ```
-##Eigenvector OT <a name="2"></a>
+##Eigenvector Centrality OT <a name="2"></a>
 
 ###Eigenvector Physical <a name="2.1"></a>
 
