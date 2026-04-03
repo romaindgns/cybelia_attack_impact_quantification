@@ -1,7 +1,7 @@
 # Cypher Queries: Graph Analytics on the Use Case 
 
 # Table of contents
-1. [Projection for Eigenvector Centrality using GDS]
+1. [Projection for Eigenvector Centrality using GDS](#1)
     1. [Projection OT](#1.1)
     2. [Projection IT](#1.2)
     3. [Projection Service](#1.3)
@@ -12,11 +12,10 @@
     4. [Eigenvector Cyber OT](#2.4)
     5. [Eigenvector Mission OT](#2.5)
 3. Eigenvector Centrality IT(#3)
-    a. [Queries for the process](#3.1)
-    b. [Queries for the process measurements](3.2)
-    c. [Queries for the process](#3.3)
-    d. [Queries for the process measurements](#3.4)
-    e. [Queries for the process measurements](#3.5)
+    1. [Eigenvector Hardware](#3.1)
+    2. [Eigenvector Software](3.2)
+    3. [Eigenvector Cyber IT](#3.3)
+    4. [Eigenvector Mission IT](#3.4)
 3. Eigenvector Centrality Services(#3)
     a. [Queries for the process](#3.1)
     b. [Queries for the process measurements](3.2)
@@ -263,4 +262,47 @@ YIELD nodeId, score
 RETURN labels(gds.util.asNode(nodeId)) AS labels, score
 ORDER BY score DESC;
 ```
+
+##Eigenvector Centrality IT <a name="3"></a>
+
+###Eigenvector Hardware <a name="3.1"></a>
+
+```cypher
+//Eigen IT Hardware
+CALL gds.eigenvector.stream('grapheHIT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Software <a name="3.2"></a>
+
+```cypher
+//Eigen IT Software
+CALL gds.eigenvector.stream('grapheSIT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Cyber IT <a name="3.3"></a>
+
+```cypher
+//Eigen IT Cyber
+CALL gds.eigenvector.stream('grapheCyberIT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Mission IT <a name="3.4"></a>
+
+```cypher
+//Eigen IT Mission
+CALL gds.eigenvector.stream('grapheMissionIT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC;
+```
+
 
