@@ -5,7 +5,7 @@
     1. [Projection OT](#1.1)
     2. [Projection IT](#1.2)
     3. [Projection Service](#1.3)
-2. Eigenvector Centrality OT(#2)
+2. Eigenvector Centrality OT(#2) 
     1. [Eigenvector Physical](#2.1)
     2. [Eigenvector Sensor](#2.2)
     3. [Eigenvector Actuator](#2.3)
