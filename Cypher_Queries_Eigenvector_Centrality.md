@@ -1,4 +1,4 @@
-# Cypher Queries: Graph Analytics on the Use Case 
+# Cypher Queries: Graph Analytics with Eigenvector Centrality on the Use Case 
 
 # Table of contents
 1. [Projection for Eigenvector Centrality using GDS](#1)
