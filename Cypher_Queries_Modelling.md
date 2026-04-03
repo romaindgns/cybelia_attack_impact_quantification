@@ -837,5 +837,224 @@ MERGE(FireWOTST)-[:CYBER_DATA_OT]->(RoutN)
 MERGE(FireWOTST)-[:MIS_PRTCT_NTWRK]->(RoutN);
 ```
 
+## Queries for the interactions between Technicians in the station and it's components
+
+```cypher
+//Types de liens
+
+// Vis à vis de OT
+// Physical: contact et danger dans le sens Composant élec => opérateur
+// Mission: Repair, maintain,  ? 
+// Humain: Have access, Manipulate, execute Order ,  ?
+// Pas de cyber ou de SH, pas de PSA
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(WorkSt:WorkStation{couche:'hardware'})
+MERGE (Opers)-[:HUM_ACCESS]->(WorkSt)
+MERGE (Opers)-[:HUM_INTERACT]->(WorkSt)
+MERGE (Opers)-[:HUM_USE_SRVC]->(WorkSt)
+MERGE (Opers)-[:MIS_PP_MONITOR_OT]->(WorkSt)
+MERGE (Opers)-[:MIS_PP_COMMAND_OT]->(WorkSt);
+
+//Liens Physiques OP vers composants Ligne Entrée
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Sectio_E:SectionneurLigneE{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Sectio_E)
+MERGE (Sectio_E)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(Sectio_E)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Sectio_E)
+MERGE (Opers)-[:HUM_MNPLT]->(Sectio_E)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Sectio_E)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Sectio_E);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Sectio_BE:SectionneurBusE{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Sectio_BE)
+MERGE (Sectio_BE)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(Sectio_BE)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Sectio_BE)
+MERGE (Opers)-[:HUM_MNPLT]->(Sectio_BE)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Sectio_BE)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Sectio_BE);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(TransC_LB:TransformateurCourantLigneBus{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(TransC_LB)
+MERGE (TransC_LB)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(TransC_LB)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(TransC_LB)
+MERGE (Opers)-[:HUM_MNPLT]->(TransC_LB)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(TransC_LB)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(TransC_LB);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_Capteurs_LB:EnsembleDeCapteursLigneBus{couche:'sensor'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_Capteurs_LB)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_Capteurs_LB)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_Capteurs_LB)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_Capteurs_LB)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_Capteurs_LB)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_Capteurs_LB);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_IED_LB:EnsembleIedLigneBus{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_IED_LB)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_IED_LB)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_IED_LB)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_IED_LB)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_IED_LB)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_IED_LB);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Disj_LB:DisjoncteurLigneBus{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Disj_LB)
+MERGE (Disj_LB)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(Disj_LB)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Disj_LB)
+MERGE (Opers)-[:HUM_MNPLT]->(Disj_LB)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Disj_LB)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Disj_LB);
+
+//Liens Physiques OP vers composants Ligne Transformateur
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Sectio_TP:SectionneurTransformateur{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Sectio_TP)
+MERGE (Sectio_TP)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(Sectio_TP)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Sectio_TP)
+MERGE (Opers)-[:HUM_MNPLT]->(Sectio_TP)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Sectio_TP)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Sectio_TP);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Sectio_S:SectionneurLigneS{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Sectio_S)
+MERGE (Sectio_S)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(Sectio_S)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Sectio_S)
+MERGE (Opers)-[:HUM_MNPLT]->(Sectio_S)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Sectio_S)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Sectio_S);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(TransC_TP:TransformateurCourantTransformateur{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(TransC_TP)
+MERGE (TransC_TP)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(TransC_TP)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(TransC_TP)
+MERGE (Opers)-[:HUM_MNPLT]->(TransC_TP)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(TransC_TP)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(TransC_TP);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_Capteurs_TP:EnsembleDeCapteursTransformateur{couche:'sensor'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_Capteurs_TP)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_Capteurs_TP)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_Capteurs_TP)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_Capteurs_TP)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_Capteurs_TP)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_Capteurs_TP);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_IED_TP:EnsembleIedTransformateur{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_IED_TP)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_IED_TP)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_IED_TP)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_IED_TP)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_IED_TP)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_IED_TP);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Disj_TP:DisjoncteurTransformateur{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Disj_TP)
+MERGE (Disj_TP)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(Disj_TP)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Disj_TP)
+MERGE (Opers)-[:HUM_MNPLT]->(Disj_TP)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Disj_TP)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Disj_TP);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(TransP_BT:TransformateurPuissanceBT{couche:'physique'})
+MERGE (Opers)-[:PHYS_CNTCT]->(TransP_BT)
+MERGE (TransP_BT)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(TransP_BT)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(TransP_BT)
+MERGE (Opers)-[:HUM_MNPLT]->(TransP_BT)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(TransP_BT)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(TransP_BT);
+
+//Liens Physiques OP vers composants BUSE
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(TransT_BusE:TransformateurTensionBusE{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(TransT_BusE)
+MERGE (TransT_BusE)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(TransT_BusE)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(TransT_BusE)
+MERGE (Opers)-[:HUM_MNPLT]->(TransT_BusE)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(TransT_BusE)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(TransT_BusE);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_IED_BusE:EnsembleIedBusE{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_IED_BusE)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_IED_BusE)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_IED_BusE)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_IED_BusE)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_IED_BusE)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_IED_BusE);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_Capteurs_BusE:EnsembleDeCapteursBusE{couche:'sensor'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_Capteurs_BusE)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_Capteurs_BusE)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_Capteurs_BusE)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_Capteurs_BusE)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_Capteurs_BusE)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_Capteurs_BusE);
+
+//Liens Physiques OP vers composants BUSS
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(TransT_BusS:TransformateurTensionBusE{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(TransT_BusS)
+MERGE (TransT_BusS)-[:PHYS_DNGR]-(Opers)
+MERGE (Opers)-[:HUM_ACCESS]->(TransT_BusS)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(TransT_BusS)
+MERGE (Opers)-[:HUM_MNPLT]->(TransT_BusS)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(TransT_BusS)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(TransT_BusS);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_IED_BusS:EnsembleIedBusE{couche:'actuator'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_IED_BusS)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_IED_BusS)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_IED_BusS)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_IED_BusS)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_IED_BusS)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_IED_BusS);
+
+MATCH (Opers:TechnicienStation{couche:'opérateur'}),(Hub_Capteurs_BusS:EnsembleDeCapteursBusE{couche:'sensor'})
+MERGE (Opers)-[:PHYS_CNTCT]->(Hub_Capteurs_BusS)
+MERGE (Opers)-[:HUM_ACCESS]->(Hub_Capteurs_BusS)
+MERGE (Opers)-[:HUM_EXECUTE_ORDER]->(Hub_Capteurs_BusS)
+MERGE (Opers)-[:HUM_MNPLT]->(Hub_Capteurs_BusS)
+MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_Capteurs_BusS)
+MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_Capteurs_BusS);
+```
+## Queries for the interactions between Operators, Humans and the workstations
+```cypher
+//Liens utilisateurs
+MATCH(Ituser:UserOfITServices{couche:'user'}),(WrkStInternal:WorkStationInternal{couche:'hardware'})
+MERGE (Ituser)-[:HUM_ACCESS]->(WrkStInternal)
+MERGE (Ituser)-[:HUM_INTERACT]->(WrkStInternal)
+MERGE (WrkStInternal)-[:HUM_INTERACT]->(Ituser)
+MERGE (Ituser)-[:HUM_USE_SRVC]->(WrkStInternal)
+MERGE (Ituser)-[:MIS_PP_BUSINESS]->(WrkStInternal);
+
+MATCH(SocOper:SocOperator{couche:'user'}),(WrkStSoc:WorkStationSoc{couche:'hardware'})
+MERGE (SocOper)-[:HUM_ACCESS]->(WrkStSoc)
+MERGE (SocOper)-[:HUM_INTERACT]->(WrkStSoc)
+MERGE (WrkStSoc)-[:HUM_INTERACT]->(SocOper)
+MERGE (SocOper)-[:HUM_USE_SRVC]->(WrkStSoc)
+MERGE (SocOper)-[:MIS_PP_MONITOR_IT]->(WrkStSoc);
+
+MATCH(ScadOper:ScadaOperator{couche:'user'}),(WrkStOpScada:WorkStationOperatorScada{couche:'hardware'})
+MERGE (ScadOper)-[:HUM_ACCESS]->(WrkStOpScada)
+MERGE (ScadOper)-[:HUM_INTERACT]->(WrkStOpScada)
+MERGE (WrkStOpScada)-[:HUM_INTERACT]->(ScadOper)
+MERGE (ScadOper)-[:HUM_USE_SRVC]->(WrkStOpScada)
+MERGE (ScadOper)-[:MIS_PP_MONITOR_OT]->(WrkStOpScada)
+MERGE (ScadOper)-[:MIS_PP_COMMAND_OT]->(WrkStOpScada);
+
+MATCH(ItGuy:ItGuy{couche:'user'}),(WrkStIT:WorkStationIT{couche:'hardware'})
+MERGE (ItGuy)-[:HUM_ACCESS]->(WrkStIT)
+MERGE (ItGuy)-[:HUM_INTERACT]->(WrkStIT)
+MERGE (WrkStIT)-[:HUM_INTERACT]->(ItGuy)
+MERGE (ItGuy)-[:HUM_USE_SRVC]->(WrkStIT)
+MERGE (ItGuy)-[:MIS_PP_COMMAND_IT]->(WrkStIT)
+MERGE (ItGuy)-[:MIS_PP_MAINTAIN_IT]->(WrkStIT)
+MERGE (ItGuy)-[:MIS_PP_REPAIR_IT]->(WrkStIT);
+```
 
 
