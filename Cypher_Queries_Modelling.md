@@ -1,6 +1,13 @@
 # Cypher Queries: Modelling of the RTE Use Case 
 
-## Queries to build the components of the electrical station
+# Table of contents
+1. [Queries to build the components of the electrical station](#1)
+2. [Queries to link the components of the station](#2)
+    1. [Queries for the process](#2.1)
+    2. [Queries for the process measurements](#2.2)
+3. [Queries to the IT infrastructure's components](#3)
+
+## Queries to build the components of the electrical station <a name="1"></a>
 
 ```cypher
 CREATE
@@ -46,8 +53,8 @@ CREATE
 (Opers:TechnicienStation{couche:'opérateur'})
 ```
 
-## Queries to link the components of the station
-### Queries for the process
+## Queries to link the components of the station <a name="2"></a>
+### Queries for the process <a name="2.1"></a>
 ```cypher
 //Entrée d'électricité vers Bus Entrée
 MATCH(Ligne_E:LigneEntrée{couche:'physique'}),
@@ -139,7 +146,7 @@ MERGE (Ligne_S)-[:Mis_PRVD_ELEC]->(EndUsers);
 // C'est la fin du process électrique
 ```
 
-### Queries for the process measurements
+### Queries for the process measurements <a name="2.2"></a>
 
 ```cypher
 //Entrée d'électricité vers Bus Entrée
@@ -271,7 +278,7 @@ MATCH (LMS:LocalMonitoringSystem{couche:'software'}),
 MERGE (LMS)-[:CYBER_DATA_OT]->(WorkSt)
 MERGE (LMS)-[:MIS_ANALYZE_DATA]->(WorkSt);
 ```
-## Queries to the IT infrastructure's components
+## Queries to the IT infrastructure's components <a name="3"></a>
 
 ```cypher
 CREATE 
