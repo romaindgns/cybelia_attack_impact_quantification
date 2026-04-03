@@ -6,7 +6,12 @@
     1. [Queries for the process](#2.1)
     2. [Queries for the process measurements](#2.2)
 3. [Queries to the IT infrastructure's components](#3)
-
+4. [Queries to link the components of the IT infrastructure](#4)
+    1. [Liens IT UP](#4.1)
+    2. [Liens IT DOWN](#4.2)
+5. [Queries to link the components of the IT infrastructure](#5)
+6. [Queries to link the components of the IT infrastructure](#6)
+   
 ## Queries to build the components of the electrical station <a name="1"></a>
 
 ```cypher
@@ -346,8 +351,8 @@ CREATE
 (ScadOper:ScadaOperator{couche:'user'});
 ```
 
-## Queries to link the components of the IT infrastructure
-### Liens IT UP
+## Queries to link the components of the IT infrastructure <a name="4"></a>
+### Liens IT UP <a name="4.1"></a>
 
 ```cypher
 //Liens cyber partants de la station et remontant dans le réseau
@@ -596,7 +601,7 @@ MERGE(SuppITNet)-[:CYBER_DATA_IT]->(WrkStIT)
 MERGE(SuppITNet)-[:MIS_TRNSMT_DATA]->(WrkStIT);
 ```
 
-###Liens IT DOWN
+###Liens IT DOWN <a name="4.2"></a>
 
 ```cypher
 // Liens partant des stations et softwares redescendants dans vers le reséau et la partie OT
@@ -844,7 +849,7 @@ MERGE(FireWOTST)-[:CYBER_DATA_OT]->(RoutN)
 MERGE(FireWOTST)-[:MIS_PRTCT_NTWRK]->(RoutN);
 ```
 
-## Queries for the interactions between Technicians in the station and it's components
+## Queries for the interactions between Technicians in the station and it's components <a name="5"></a>
 
 ```cypher
 //Types de liens
@@ -1029,7 +1034,7 @@ MERGE (Opers)-[:HUM_MNPLT]->(Hub_Capteurs_BusS)
 MERGE (Opers)-[:MIS_PP_MAINTAIN_OT]->(Hub_Capteurs_BusS)
 MERGE (Opers)-[:MIS_PP_REPAIR_OT]->(Hub_Capteurs_BusS);
 ```
-## Queries for the interactions between Operators, Humans and the workstations
+## Queries for the interactions between Operators, Humans and the workstations <a name="6"></a>
 ```cypher
 //Liens utilisateurs
 MATCH(Ituser:UserOfITServices{couche:'user'}),(WrkStInternal:WorkStationInternal{couche:'hardware'})
