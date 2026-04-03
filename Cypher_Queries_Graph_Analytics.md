@@ -2,18 +2,32 @@
 
 # Table of contents
 1. [Projection for Eigenvector Centrality using GDS](#1)
-  1. [Projection OT](#1.1)
-  2. [Projection IT](#1.2)
-  3. [Projection Service](#1.3)
-2. [Queries to link the components of the station](#2)
-    1. [Queries for the process](#2.1)
-    2. [Queries for the process measurements](#2.2)
-5. [Queries to the IT infrastructure's components](#3)
-6. [Queries to link the components of the IT infrastructure](#4)
+  a. [Projection OT](#1.1)
+  b. [Projection IT](#1.2)
+  c. [Projection Service](#1.3)
+2. Eigenvector Centrality OT(#2)
+    a. [Eigenvector Physical](#2.1)
+    b. [Eigenvector Sensor](#2.2)
+    c. [Eigenvector Actuator](#2.3)
+    d. [Eigenvector Cyber OT](#2.4)
+    e. [Eigenvector Mission OT](#2.5)
+3. Eigenvector Centrality IT(#3)
+    a. [Queries for the process](#3.1)
+    b. [Queries for the process measurements](3.2)
+    c. [Queries for the process](#3.3)
+    d. [Queries for the process measurements](#3.4)
+    e. [Queries for the process measurements](#3.5)
+3. Eigenvector Centrality Services(#3)
+    a. [Queries for the process](#3.1)
+    b. [Queries for the process measurements](3.2)
+    c. [Queries for the process](#3.3)
+    d. [Queries for the process measurements](#3.4)
+    e. [Queries for the process measurements](#3.5)
+7. [Queries to link the components of the IT infrastructure](#4)
     1. [Liens IT UP](#4.1)
     2. [Liens IT DOWN](#4.2)
-7. [Queries to link the components of the IT infrastructure](#5)
-8. [Queries to link the components of the IT infrastructure](#6)
+8. [Queries to link the components of the IT infrastructure](#5)
+9. [Queries to link the components of the IT infrastructure](#6)
    
 ## Projection for Eigenvector Centrality using GDS  <a name="1"></a>
 
@@ -197,6 +211,55 @@ CALL gds.graph.project(
   'NoeudsPP',
   ["HUM_MNPLT","HUM_EXECUTE_ORDER","HUM_USE_SRVC","HUM_INTERACT","HUM_ACCESS"]
 );
+```
 
+###Eigenvector Physical <a name="2.1"></a>
+
+```cypher
+//Eigen OT Physique
+CALL gds.eigenvector.stream('graphePhysiqueOT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Sensor <a name="2.2"></a>
+
+```cypher
+//Eigen OT Sensor
+CALL gds.eigenvector.stream('grapheSensorOT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Actuator <a name="2.3"></a>
+
+```cypher
+//Eigen OT Actuator
+CALL gds.eigenvector.stream('grapheActuatorOT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Cyber OT <a name="2.4"></a>
+
+```cypher
+//Eigen OT Cyber
+CALL gds.eigenvector.stream('grapheCyberOT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Mission OT <a name="2.5"></a>
+
+```cypher
+//Eigen OT Mission
+CALL gds.eigenvector.stream('grapheMissionOT')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC;
 ```
 
