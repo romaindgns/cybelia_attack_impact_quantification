@@ -2,9 +2,9 @@
 
 # Table of contents
 1. [Projection for Eigenvector Centrality using GDS](#1)
-    i. [Projection OT](#1.1)
-    ii. [Projection IT](#1.2)
-    iii. [Projection Service](#1.3)
+    1. [Projection OT](#1.1)
+    2. [Projection IT](#1.2)
+    3. [Projection Service](#1.3)
 2. Eigenvector Centrality OT(#2)
     a. [Eigenvector Physical](#2.1)
     b. [Eigenvector Sensor](#2.2)
