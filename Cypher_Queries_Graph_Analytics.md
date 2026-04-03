@@ -11,7 +11,7 @@
     3. [Eigenvector Actuator](#2.3)
     4. [Eigenvector Cyber OT](#2.4)
     5. [Eigenvector Mission OT](#2.5)
-3. Eigenvector Centrality IT(#3)
+3. [Eigenvector Centrality IT](#3)
     1. [Eigenvector Hardware](#3.1)
     2. [Eigenvector Software](3.2)
     3. [Eigenvector Cyber IT](#3.3)
