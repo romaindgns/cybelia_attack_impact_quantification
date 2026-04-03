@@ -16,17 +16,11 @@
     2. [Eigenvector Software](3.2)
     3. [Eigenvector Cyber IT](#3.3)
     4. [Eigenvector Mission IT](#3.4)
-3. Eigenvector Centrality Services(#3)
-    a. [Queries for the process](#3.1)
-    b. [Queries for the process measurements](3.2)
-    c. [Queries for the process](#3.3)
-    d. [Queries for the process measurements](#3.4)
-    e. [Queries for the process measurements](#3.5)
-7. [Queries to link the components of the IT infrastructure](#4)
-    1. [Liens IT UP](#4.1)
-    2. [Liens IT DOWN](#4.2)
-8. [Queries to link the components of the IT infrastructure](#5)
-9. [Queries to link the components of the IT infrastructure](#6)
+4. [Eigenvector Centrality Service](#4)
+    1. [Eigenvector Users](#4.1)
+    2. [Eigenvector EndUsers](4.2)
+    3. [Eigenvector Operators](#4.3)
+    4. [Eigenvector Mission Service](#4.4)
    
 ## Projection for Eigenvector Centrality using GDS  <a name="1"></a>
 
@@ -305,4 +299,45 @@ RETURN labels(gds.util.asNode(nodeId)) AS labels, score
 ORDER BY score DESC;
 ```
 
+##Eigenvector Centrality Service <a name="4"></a>
+
+###Eigenvector Users <a name="4.1"></a>
+
+```cypher
+//Eigen PP USERS
+CALL gds.eigenvector.stream('graphePpUsers')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector EndUsers <a name="4.2"></a>
+
+```cypher
+//Eigen PP EndUSERS
+CALL gds.eigenvector.stream('graphePpEndUsers')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Operators <a name="4.3"></a>
+
+```cypher
+//Eigen PP Operators
+CALL gds.eigenvector.stream('graphePpOperators')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
+
+###Eigenvector Mission IT <a name="4.4"></a>
+
+```cypher
+//Eigen PP Mission
+CALL gds.eigenvector.stream('graphePpMis')
+YIELD nodeId, score
+RETURN labels(gds.util.asNode(nodeId)) AS labels, score
+ORDER BY score DESC
+```
 
