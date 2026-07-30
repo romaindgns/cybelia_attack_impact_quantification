@@ -1,4 +1,4 @@
-'''cypher
+```cypher
 
 WITH ['NoeudsPhysique','NoeudsActuator','NoeudsSensor','NoeudsS','NoeudsH','NoeudsEndUsers','NoeudsUsers','NoeudsOpérateurs'] AS NoeudsCibles
 
@@ -44,4 +44,4 @@ RETURN labels(n) AS node,
        coalesce(scores.NoeudsOperators, 0) AS Operators
 ORDER BY node
 
-'''
+```
