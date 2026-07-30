@@ -1,4 +1,4 @@
-'''cypher'''
+'''cypher
 
 WITH ['NoeudsPhysique','NoeudsActuator','NoeudsSensor','NoeudsS','NoeudsH','NoeudsEndUsers','NoeudsUsers','NoeudsOpérateurs'] AS NoeudsCibles
 
@@ -32,7 +32,7 @@ WITH n, collect({proj: proj, score: score}) AS pairs
 WITH n,
      reduce(m = {}, p IN pairs | apoc.map.setKey(m, p.proj, p.score)) AS scores
 
-// Regroupement des données
+//Regroupement des données
 RETURN labels(n) AS node,
        coalesce(scores.NoeudsPhysique, 0) AS PhysiqueOT,
        coalesce(scores.NoeudsActuator, 0) AS ActuatorOT,
@@ -43,4 +43,5 @@ RETURN labels(n) AS node,
        coalesce(scores.NoeudsUsers, 0) AS Users,
        coalesce(scores.NoeudsOperators, 0) AS Operators
 ORDER BY node
+
 '''
